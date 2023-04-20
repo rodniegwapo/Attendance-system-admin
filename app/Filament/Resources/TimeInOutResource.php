@@ -5,7 +5,6 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TimeInOutResource\Pages;
 use App\Models\TimeInOut;
 use App\Models\YearLevel;
-use Carbon\Carbon;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
@@ -14,7 +13,6 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
 
 class TimeInOutResource extends Resource
 {
@@ -42,12 +40,9 @@ class TimeInOutResource extends Resource
 
                 TextColumn::make('student.yearLevel.name')->label('Year Level'),
                 BadgeColumn::make('event.name')->label('Event'),
-                TextColumn::make('time_in')->getStateUsing(function (Model $record) {
-                        return Carbon::parse($record->time_in)->format('F d, Y h:m:s A');
-                    }),
-                TextColumn::make('time_out')->getStateUsing(function (Model $record) {
-                    return Carbon::parse($record->time_out)->format('F d, Y h:m:s A');
-                }),
+                TextColumn::make('time_in'),
+                TextColumn::make('time_out'),
+
             ])
             ->filters([
                 //

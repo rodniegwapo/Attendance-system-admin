@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\TimeInOutController;
+use App\Http\Controllers\YearLevelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/yearLevels', [YearLevelController::class, 'index']);
+Route::post('/generateQRCode', [AuthController::class, 'generateQRCode']);
+Route::get('/events', [EventController::class, 'index']);
+// Route::post('/setTimeIn', [TimeInOutController::class, 'setTimeIn']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('/setTimeIn', [TimeInOutController::class, 'setTimeIn']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+});
