@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Filament\Resources\TimeInOutResource\Pages;
 use App\Models\TimeInOut;
 use App\Models\YearLevel;
@@ -48,19 +50,31 @@ class TimeInOutResource extends Resource
                 //
                 SelectFilter::make('event')->relationship('event', 'name')->searchable(),
                 SelectFilter::make('student')->options(fn () => YearLevel::all()->pluck('name', 'id')->toArray())
-                ->query(function (Builder $query, array $data) {
-                    if (! empty($data['value'])) {
-                        return $query->whereHas('student', fn ($query) => $query->where('year_level_id', $data['value']));
-                    }
-                }),
+                    ->query(function (Builder $query, array $data) {
+                        if (! empty($data['value'])) {
+                            return $query->whereHas('student', fn ($query) => $query->where('year_level_id', $data['value']));
+                        }
+                    }),
             ])
             ->actions([
                 // Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 // Tables\Actions\DeleteBulkAction::make(),
+            ])
+            ->headerActions([
+                FilamentExportHeaderAction::make('Export'),
             ])->poll('5s');
     }
+
+    // protected function getTableBulkActions(): array
+    // {
+    //     return [
+
+    //         FilamentExportBulkAction::make('Export'),
+
+    //     ];
+    // }
 
     public static function getRelations(): array
     {
