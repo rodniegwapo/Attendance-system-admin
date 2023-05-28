@@ -16,4 +16,9 @@ class ListStudents extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'asc';
+    }
 }

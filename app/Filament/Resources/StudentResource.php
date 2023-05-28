@@ -35,29 +35,29 @@ class StudentResource extends Resource
                     ->options(YearLevel::all()->pluck('name', 'id'))
                     ->searchable(),
             ]);
-
     }
 
-//     protected function getActions(): array
-//     {
-//     return [
-//         Action::make('students')->action('openSettingsModal'),
-//     ];
-// }
+    //     protected function getActions(): array
+    //     {
+    //     return [
+    //         Action::make('students')->action('openSettingsModal'),
+    //     ];
+    // }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                TextColumn::make('last_name'),
                 TextColumn::make('first_name'),
                 TextColumn::make('middle_name'),
-                TextColumn::make('last_name'),
                 BadgeColumn::make('yearLevel.name'),
                 // TextColumn::make('year_level')->getStateUsing(function (Model $record) {
                 //     return YearLevel::firstWhere('id', $record->year_level)->name;
                 // }),
 
             ])
+            ->defaultSort('last_name')
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])
