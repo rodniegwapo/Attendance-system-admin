@@ -36,16 +36,16 @@ class TimeInOutResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('student.last_name')->label('Last Name')->searchable()->sortable(),
                 TextColumn::make('student.first_name')->label('First Name')->searchable(),
                 TextColumn::make('student.middle_name')->label('Middle Name')->searchable(),
-                TextColumn::make('student.last_name')->label('Last Name')->searchable(),
-
                 TextColumn::make('student.yearLevel.name')->label('Year Level'),
                 BadgeColumn::make('event.name')->label('Event'),
                 TextColumn::make('time_in'),
                 TextColumn::make('time_out'),
 
-            ])
+            ])->defaultSort('student.last_name')
+
             ->filters([
                 //
                 SelectFilter::make('event')->relationship('event', 'name')->searchable(),
