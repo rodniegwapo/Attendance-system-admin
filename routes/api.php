@@ -30,5 +30,6 @@ Route::get('/events', [EventController::class, 'index']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/setTimeIn', [TimeInOutController::class, 'setTimeIn']);
+    Route::post('/setTimeOut', [TimeInOutController::class, 'setTimeOut']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

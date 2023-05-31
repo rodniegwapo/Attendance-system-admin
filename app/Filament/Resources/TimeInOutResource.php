@@ -15,6 +15,8 @@ use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class TimeInOutResource extends Resource
 {
@@ -41,8 +43,21 @@ class TimeInOutResource extends Resource
                 TextColumn::make('student.middle_name')->label('Middle Name')->searchable(),
                 TextColumn::make('student.yearLevel.name')->label('Year Level'),
                 BadgeColumn::make('event.name')->label('Event'),
-                TextColumn::make('time_in'),
-                TextColumn::make('time_out'),
+                TextColumn::make('time_in')->getStateUsing(function (Model $record) {
+                    if ($record->time_in) {
+                         return Carbon::parse($record->time_in)->tz('Asia/Manila')->format('Y-m-d H:i');
+                    }
+
+                    return $record->time_in;
+
+                }),
+                TextColumn::make('time_out')->getStateUsing(function (Model $record) {
+                    if ($record->time_out) {
+                        return Carbon::parse($record->time_out)->tz('Asia/Manila')->format('Y-m-d H:i');
+                   }
+
+                   return $record->time_out;
+                }),
 
             ])->defaultSort('student.last_name')
 
