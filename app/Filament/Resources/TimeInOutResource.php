@@ -45,18 +45,17 @@ class TimeInOutResource extends Resource
                 BadgeColumn::make('event.name')->label('Event'),
                 TextColumn::make('time_in')->getStateUsing(function (Model $record) {
                     if ($record->time_in) {
-                         return Carbon::parse($record->time_in)->tz('Asia/Manila')->format('Y-m-d H:i');
+                        return Carbon::parse($record->time_in)->tz('Asia/Manila')->format('Y-m-d g:i A');
                     }
 
                     return $record->time_in;
-
                 }),
                 TextColumn::make('time_out')->getStateUsing(function (Model $record) {
                     if ($record->time_out) {
-                        return Carbon::parse($record->time_out)->tz('Asia/Manila')->format('Y-m-d H:i');
-                   }
+                        return Carbon::parse($record->time_out)->tz('Asia/Manila')->format('Y-m-d g:i A');
+                    }
 
-                   return $record->time_out;
+                    return $record->time_out;
                 }),
 
             ])->defaultSort('student.last_name')
